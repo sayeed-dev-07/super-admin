@@ -28,24 +28,26 @@ export default function DashboardOverviewPage() {
     ];
 
     return (
-        <div className="max-w-7xl mx-auto text-black">
+        <div className="max-w-7xl mx-auto space-y-8">
             {/* Header Section */}
-            <div className="mb-8">
-                <h1 className="text-3xl font-black text-black uppercase tracking-tight">System Overview</h1>
-                <p className="text-sm font-bold mt-1 text-gray-600">Welcome back, Superadmin. Here is what is happening on the platform today.</p>
+            <div>
+                <h1 className="text-2xl font-bold text-slate-900 tracking-tight">System Overview</h1>
+                <p className="text-sm font-medium mt-1 text-slate-500">Welcome back, Superadmin. Here is what is happening on the platform today.</p>
             </div>
 
             {/* Top Stats Grid */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
                 {stats.map((stat, index) => {
                     const Icon = stat.icon;
                     return (
-                        <div key={index} className="bg-white p-6 border border-black flex flex-col justify-between">
+                        <div key={index} className="bg-white p-6 rounded-xl border border-slate-200 shadow-sm flex flex-col justify-between hover:shadow-md transition-shadow duration-200">
                             <div className="flex items-center justify-between mb-4">
-                                <h3 className="text-sm font-bold text-gray-500 uppercase">{stat.title}</h3>
-                                <Icon className="h-5 w-5 text-black" />
+                                <h3 className="text-sm font-medium text-slate-500">{stat.title}</h3>
+                                <div className="p-2.5 bg-slate-50 rounded-lg text-slate-600 border border-slate-100">
+                                    <Icon className="h-5 w-5" />
+                                </div>
                             </div>
-                            <div className="text-4xl font-black text-black">{stat.value}</div>
+                            <div className="text-3xl font-bold text-slate-900">{stat.value}</div>
                         </div>
                     );
                 })}
@@ -55,36 +57,40 @@ export default function DashboardOverviewPage() {
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
 
                 {/* Left Column: Recent Activity (Takes up 2/3 space) */}
-                <div className="lg:col-span-2 flex flex-col gap-8">
-                    <div className="bg-white border border-black">
-                        <div className="p-4 border-b border-black flex items-center justify-between">
-                            <h2 className="text-lg font-bold text-black uppercase flex items-center gap-2">
-                                <ShieldAlert className="h-5 w-5" />
+                <div className="lg:col-span-2 flex flex-col gap-6">
+                    <div className="bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden">
+                        <div className="p-5 border-b border-slate-200 flex items-center justify-between bg-slate-50/50">
+                            <h2 className="text-base font-semibold text-slate-800 flex items-center gap-2">
+                                <ShieldAlert className="h-5 w-5 text-slate-400" />
                                 Recent Shop Registrations
                             </h2>
-                            <Link href="/dashboard/tenants" className="text-sm font-bold hover:underline cursor-pointer flex items-center gap-1">
+                            <Link href="/dashboard/tenants" className="text-sm font-medium text-indigo-600 hover:text-indigo-700 cursor-pointer flex items-center gap-1 transition-colors">
                                 View All <ArrowRight className="h-4 w-4" />
                             </Link>
                         </div>
-                        <div className="p-0 overflow-x-auto">
+                        <div className="overflow-x-auto">
                             <table className="w-full text-left text-sm whitespace-nowrap">
-                                <thead className="bg-gray-100 border-b border-black text-black">
-                                    <tr>
-                                        <th className="px-6 py-3 font-bold border-r border-black">Shop Name</th>
-                                        <th className="px-6 py-3 font-bold border-r border-black">Domain</th>
-                                        <th className="px-6 py-3 font-bold">Verification</th>
+                                <thead>
+                                    <tr className="bg-slate-50 border-b border-slate-200 text-slate-500 text-xs uppercase tracking-wider">
+                                        <th className="px-6 py-4 font-medium">Shop Name</th>
+                                        <th className="px-6 py-4 font-medium">Domain</th>
+                                        <th className="px-6 py-4 font-medium">Verification</th>
                                     </tr>
                                 </thead>
-                                <tbody className="divide-y divide-black">
+                                <tbody className="divide-y divide-slate-100">
                                     {recentShops.map((shop) => (
-                                        <tr key={shop._id} className="hover:bg-gray-50">
-                                            <td className="px-6 py-4 border-r border-black font-bold">{shop.name}</td>
-                                            <td className="px-6 py-4 border-r border-black font-medium text-gray-600">{shop.domain}</td>
-                                            <td className="px-6 py-4 font-bold">
+                                        <tr key={shop._id} className="hover:bg-slate-50/80 transition-colors">
+                                            <td className="px-6 py-4 font-semibold text-slate-900">{shop.name}</td>
+                                            <td className="px-6 py-4 text-slate-500">{shop.domain}</td>
+                                            <td className="px-6 py-4">
                                                 {shop.status === "Pending" ? (
-                                                    <span className="bg-black text-white px-2 py-1 text-xs border border-black">PENDING</span>
+                                                    <span className="bg-amber-50 text-amber-700 border border-amber-200 px-2.5 py-1 rounded-md text-xs font-semibold tracking-wide">
+                                                        PENDING
+                                                    </span>
                                                 ) : (
-                                                    <span className="bg-white text-black px-2 py-1 text-xs border border-black">VERIFIED</span>
+                                                    <span className="bg-emerald-50 text-emerald-700 border border-emerald-200 px-2.5 py-1 rounded-md text-xs font-semibold tracking-wide">
+                                                        VERIFIED
+                                                    </span>
                                                 )}
                                             </td>
                                         </tr>
@@ -97,30 +103,36 @@ export default function DashboardOverviewPage() {
 
                 {/* Right Column: Quick Actions (Takes up 1/3 space) */}
                 <div className="flex flex-col gap-4">
-                    <h2 className="text-lg font-bold text-black uppercase mb-2">Quick Actions</h2>
+                    <h2 className="text-base font-semibold text-slate-800 mb-1">Quick Actions</h2>
 
                     <Link
                         href="/dashboard/tenants/add"
-                        className="flex items-center justify-between bg-black text-white p-4 border border-black hover:bg-gray-800 transition-colors cursor-pointer group"
+                        className="flex items-center justify-between bg-indigo-600 text-white p-4 rounded-xl shadow-sm hover:bg-indigo-700 transition-colors cursor-pointer group"
                     >
-                        <span className="font-bold">Register New Tenant</span>
-                        <Plus className="h-5 w-5 group-hover:scale-110 transition-transform" />
+                        <span className="font-medium">Register New Tenant</span>
+                        <div className="bg-white/20 p-1 rounded-md group-hover:bg-white/30 transition-colors">
+                            <Plus className="h-5 w-5" />
+                        </div>
                     </Link>
 
                     <Link
                         href="/dashboard/products/add"
-                        className="flex items-center justify-between bg-white text-black p-4 border border-black hover:bg-gray-100 transition-colors cursor-pointer group"
+                        className="flex items-center justify-between bg-white text-slate-700 p-4 rounded-xl border border-slate-200 shadow-sm hover:bg-slate-50 transition-colors cursor-pointer group"
                     >
-                        <span className="font-bold">Add Master Product</span>
-                        <Plus className="h-5 w-5 group-hover:scale-110 transition-transform" />
+                        <span className="font-medium">Add Master Product</span>
+                        <div className="bg-slate-100 p-1 rounded-md text-slate-500 group-hover:bg-slate-200 group-hover:text-slate-700 transition-colors">
+                            <Plus className="h-5 w-5" />
+                        </div>
                     </Link>
 
                     <Link
                         href="/dashboard/inventories/add"
-                        className="flex items-center justify-between bg-white text-black p-4 border border-black hover:bg-gray-100 transition-colors cursor-pointer group"
+                        className="flex items-center justify-between bg-white text-slate-700 p-4 rounded-xl border border-slate-200 shadow-sm hover:bg-slate-50 transition-colors cursor-pointer group"
                     >
-                        <span className="font-bold">Allocate Inventory</span>
-                        <Plus className="h-5 w-5 group-hover:scale-110 transition-transform" />
+                        <span className="font-medium">Allocate Inventory</span>
+                        <div className="bg-slate-100 p-1 rounded-md text-slate-500 group-hover:bg-slate-200 group-hover:text-slate-700 transition-colors">
+                            <Plus className="h-5 w-5" />
+                        </div>
                     </Link>
                 </div>
             </div>
